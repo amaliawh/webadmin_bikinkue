@@ -9,7 +9,7 @@ import TableList from 'src/components/Dashboard/Views/TableList.vue'
 import Icons from 'src/components/Dashboard/Views/Icons.vue'
 import Maps from 'src/components/Dashboard/Views/Maps.vue'
 import Notifications from 'src/components/Dashboard/Views/Notifications.vue'
-import Form from 'src/components/Dashboard/Views/Form.vue'
+import TambahResep from 'src/components/Dashboard/Views/TambahResep.vue'
 import Login from 'src/components/Dashboard/Views/Login.vue'
 
 const routes = [
@@ -55,9 +55,9 @@ const routes = [
         component: Notifications
       },
       {
-        path: 'form',
-        name: 'Form',
-        component: Form
+        path: 'tambahresep',
+        name: 'Tambah Resep',
+        component: TambahResep
       },
       {
         path: 'login',

@@ -1,68 +1,10 @@
 <template>
   <div class="content">
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-xl-3 col-md-6">
-          <stats-card>
-            <div slot="header" class="icon-warning">
-              <i class="nc-icon nc-chart text-warning"></i>
-            </div>
-            <div slot="content">
-              <p class="card-category">Capacity</p>
-              <h4 class="card-title">105GB</h4>
-            </div>
-            <div slot="footer">
-              <i class="fa fa-refresh"></i>Updated now
-            </div>
-          </stats-card>
-        </div>
-
-        <div class="col-xl-3 col-md-6">
-          <stats-card>
-            <div slot="header" class="icon-success">
-              <i class="nc-icon nc-light-3 text-success"></i>
-            </div>
-            <div slot="content">
-              <p class="card-category">Revenue</p>
-              <h4 class="card-title">$1,345</h4>
-            </div>
-            <div slot="footer">
-              <i class="fa fa-calendar-o"></i>Last day
-            </div>
-          </stats-card>
-        </div>
-
-        <div class="col-xl-3 col-md-6">
-          <stats-card>
-            <div slot="header" class="icon-danger">
-              <i class="nc-icon nc-vector text-danger"></i>
-            </div>
-            <div slot="content">
-              <p class="card-category">Errors</p>
-              <h4 class="card-title">23</h4>
-            </div>
-            <div slot="footer">
-              <i class="fa fa-clock-o"></i>Last day
-            </div>
-          </stats-card>
-        </div>
-
-        <div class="col-xl-3 col-md-6">
-          <stats-card>
-            <div slot="header" class="icon-info">
-              <i class="nc-icon nc-favourite-28 text-primary"></i>
-            </div>
-            <div slot="content">
-              <p class="card-category">Followers</p>
-              <h4 class="card-title">+45</h4>
-            </div>
-            <div slot="footer">
-              <i class="fa fa-refresh"></i>Updated now
-            </div>
-          </stats-card>
-        </div>
-
+      <div>
+      <apexcharts width="380" type="donut" :options="options" :series="series"></apexcharts>
       </div>
+
       <div class="row">
         <div class="col-md-8">
           <chart-card :chart-data="lineChart.data"
@@ -86,6 +28,7 @@
           </chart-card>
         </div>
 
+      
         <div class="col-md-4">
           <chart-card :chart-data="pieChart.data" chart-type="Pie">
             <template slot="header">
@@ -106,6 +49,7 @@
           </chart-card>
         </div>
       </div>
+    
 
       <div class="row">
         <div class="col-md-6">
@@ -115,12 +59,11 @@
             :chart-responsive-options="barChart.responsiveOptions"
             chart-type="Bar">
             <template slot="header">
-              <h4 class="card-title">2014 Sales</h4>
-              <p class="card-category">All products including Taxes</p>
+              <h4 class="card-title">2018 BikinKue</h4>
             </template>
             <template slot="footer">
               <div class="legend">
-                <i class="fa fa-circle text-info"></i> Tesla Model S
+                <!-- <i class="fa fa-circle text-info"></i> Tesla Model S -->
                 <i class="fa fa-circle text-danger"></i> BMW 5 Series
               </div>
               <hr>

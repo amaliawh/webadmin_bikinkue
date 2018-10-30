@@ -26,9 +26,9 @@
         <i class="nc-icon nc-bell-55"></i>
         <p>Notifications</p>
       </sidebar-link>
-      <sidebar-link to="/admin/form">
+      <sidebar-link to="/admin/tambahresep">
         <i class="nc-icon nc-paper-2"></i>
-        <p>Form</p>
+        <p>Tambah Resep</p>
       </sidebar-link>
        <sidebar-link to="/admin/login">
         <i class="nc-icon nc-paper-2"></i>

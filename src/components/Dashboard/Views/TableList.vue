@@ -97,9 +97,9 @@
                   <td>{{ satuResep.porsi }}</td>
                   <td>{{ satuResep.durasi }}</td>
                   <td> <img :src="satuResep.image_resep" width="100" height="100"> </td>
-                  <td><button type="submit" class="btn btn-info btn-fill float-right" @click.prevent="showItem(resep)">
+                  <!-- <td><button type="submit" class="btn btn-info btn-fill float-right" @click.prevent="showItem(resep)">
           Edit</button><br><br><button type="submit" class="btn btn-danger btn-fill float-right" @click.prevent="deleteResep(resep)">
-          Delete</button></td>
+          Delete</button></td> -->
                   
                 </tr>
 
@@ -159,16 +159,15 @@
                   <th>Status Penerimaan</th>
                   <th>Total</th>
                 </tr>
-                <!-- <tr v-for="satuTransaksi in transaksi" :key="satuTransaksi.id_">
-                  <td>{{ satuResep.id_resep }}</td>
-                  <td>{{ satuResep.nama_resep }}</td>
-                  <td>{{ satuResep.alat }}</td>
-                  <td>{{ satuResep.bahan }}</td>
-                  <td>{{ satuResep.cara }}</td>
-                  <td>{{ satuResep.porsi }}</td>
-                  <td>{{ satuResep.durasi }}</td>
-                  <td> <img :src="satuResep.image_resep" width="100" height="100"> </td>  
-                </tr> -->
+                <tr v-for="satuTransaksi in transaksi" :key="satuTransaksi.id_detail_transaksi">
+                  <td>{{ satuTransaksi.id_detail_transaksi }}</td>
+                  <td>{{ satuTransaksi.waktu }}</td>
+                  <td>{{ satuTransaksi.status_pembayaran }}</td>
+                  <td>{{ satuTransaksi.status_proses }}</td>
+                  <td>{{ satuTransaksi.status_pengiriman }}</td>
+                  <td>{{ satuTransaksi.status_penerimaan }}</td>
+                  <td>{{ satuTransaksi.total_harga_transaksi }}</td> 
+                </tr>
 
               </table>
             </div>
@@ -194,6 +193,7 @@
         pembeli: [],
         penjual: [],
         resep: [],
+        transaksi: [],
         update: false,
         edit: null,
       }
@@ -202,6 +202,7 @@
       this.getPembeli();
       this.getPenjual();
       this.getResep();
+      this.getTransaksi();
     },
     methods: {
       getPembeli() {
@@ -234,17 +235,27 @@
             console.log("Error: ", error);
         })
       },
-      showItem(resep) { 
-            this.update = true; 
-            this.$axios.get('https://bikinkue.herokuapp.com/api/resep' + resep.id_resep) 
-            .then(res => {  
-                this.edit = res.data.data; 
-                console.log(res.data.data); 
-            }) 
-            .catch(function(error) {
-              console.log("Error: ", error);
-            }); 
-    },
+      getTransaksi() {
+        axios.get('https://bikinkue.herokuapp.com/api/detailtransaksi')
+        .then( res => {
+            this.transaksi = res.data.data;
+            console.log("Data response: ", res.data.data);
+        })
+        .catch(function(error) {
+            console.log("Error: ", error);
+        })
+      },
+    //   showItem(resep) { 
+    //         this.update = true; 
+    //         this.$axios.get('https://bikinkue.herokuapp.com/api/resep' + resep.id_resep) 
+    //         .then(res => {  
+    //             this.edit = res.data.data; 
+    //             console.log(res.data.data); 
+    //         }) 
+    //         .catch(function(error) {
+    //           console.log("Error: ", error);
+    //         }); 
+    // },
   }
 }
 </script>
