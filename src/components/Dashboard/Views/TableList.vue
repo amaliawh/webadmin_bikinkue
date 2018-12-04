@@ -18,7 +18,7 @@
                   <th>Phone</th>
                   <th>Gender</th>
                   <th>Image</th>
-                  <th>Keranjang</th>
+                
                 </tr>
                 <tr v-for="satuPembeli in pembeli" :key="satuPembeli.id_pembeli">
                   <td>{{ satuPembeli.id_pembeli }}</td>
@@ -28,7 +28,6 @@
                   <td>{{ satuPembeli.notlp_pem }}</td>
                   <td>{{ satuPembeli.jenis_kelamin_pem }}</td>
                   <td> <img :src="satuPembeli.image_pem"> </td>
-                  <td>{{ satuPembeli.keranjang }}</td>
                 </tr>
 
               </table>
@@ -60,7 +59,7 @@
                   <td>{{ satuPenjual.email_pen }}</td>
                   <td>{{ satuPenjual.notlp_pen }}</td>
                   <td>{{ satuPenjual.jenis_kelamin_pen }}</td>
-                  <td> <img :src="satuPenjual.image_pen"> </td>
+                  <td> <img :src="satuPenjual.image_pen" width="100" height="100"> </td>
                   <td>{{ satuPenjual.nama_toko_pen }}</td>
                 </tr>
 
@@ -86,6 +85,8 @@
                   <th>Porsi</th>
                   <th>Durasi</th>
                   <th>Image</th>
+                  <th>Id Chef</th>
+                  <th>Id Kategori Resep</th>
                   <th>Aksi</th>
                 </tr>
                 <tr v-for="satuResep in resep" :key="satuResep.id_resep">
@@ -97,51 +98,70 @@
                   <td>{{ satuResep.porsi }}</td>
                   <td>{{ satuResep.durasi }}</td>
                   <td> <img :src="satuResep.image_resep" width="100" height="100"> </td>
-                  <!-- <td><button type="submit" class="btn btn-info btn-fill float-right" @click.prevent="showItem(resep)">
-          Edit</button><br><br><button type="submit" class="btn btn-danger btn-fill float-right" @click.prevent="deleteResep(resep)">
-          Delete</button></td> -->
+                  <td>{{ satuResep.id_chef }}</td>
+                  <td>{{ satuResep.id_kategori_resep }}</td>
+                  <td>
+                      <button v-b-modal.update class="btn btn-danger btn-fill float-right" @click="showItem(satuResep)">Edit</button>
+                      <br>
+                      <br>
+                      <button @click="deleteResep(satuResep)" class="btn btn-danger btn-fill float-right">Delete</button>
+                  </td>
                   
                 </tr>
 
               </table>
 
-            </div>
-          <!-- </card> -->
-        </div>
-        <!-- <div> -->
-        <!-- <b-modal id="update" ref="modal" size="lg" title="Edit Resep" @ok="editResep(edit)"> 
+             </div>
+            <!-- </card>  -->
+        </div>  
+        <div> 
+         <b-modal id="update" ref="modal" size="lg" title="Edit Resep" @ok="editResep(edit)"> 
               <form @submit.prevent ="editResep(edit)" style="padding:20px">
+                 <div class="form-group">
+                    <label for="nama_resep">Id Resep:</label>
+                    <input type="text" class="form-control" :plain="true" id="id_resep" v-model="edit.id_resep">
+                </div>
                 <div class="form-group">
                     <label for="nama_resep">Nama Resep:</label>
-                    <input type="text" class="form-control" id="nama_resep" v-model="edit.nama_resep">
+                    <input type="text" class="form-control" :plain="true" id="nama_resep" v-model="edit.nama_resep">
                 </div>
                 <div class="form-group">
                     <label for="alat">Alat:</label>
-                    <input type="text" class="form-control" id="alat" v-model="edit.alat">
+                    <input type="text" class="form-control" :plain="true" id="alat" v-model="edit.alat">
                 </div>
                 <div class="form-group">
                     <label for="bahan">Bahan:</label>
-                    <input type="text" class="form-control" id="bahan" v-model="edit.bahan">
+                    <input type="text" class="form-control" :plain="true" id="bahan" v-model="edit.bahan">
                 </div>
                 <div class="form-group">
                     <label for="cara">Cara Memasak:</label>
-                    <input type="text" class="form-control" id="cara" v-model="edit.cara">
+                    <input type="text" class="form-control" :plain="true" id="cara" v-model="edit.cara">
                 </div>
                 <div class="form-group">
                     <label for="porsi">Porsi:</label>
-                    <input type="number" class="form-control" id="porsi" v-model="edit.porsi">
+                    <input type="text" class="form-control" :plain="true" id="porsi" v-model="edit.porsi">
                 </div>
                 <div class="form-group">
                     <label for="durasi">Durasi:</label>
-                    <input type="time" class="form-control" id="durasi" v-model="edit.durasi">
+                    <input type="text" class="form-control" :plain="true" id="durasi" v-model="edit.durasi">
                 </div>
                 <div class="form-group">
                     <label for="img_resep">Image Resep:</label>
                     <b-form-file id="img_resep" :plain="true" v-model="edit.image_resep" @change="onFileSelected"/>
+                    <img :src="edit.image_resep" width="100" height="100">
                 </div> 
+                <div class="form-group">
+                    <label for="durasi">Id Chef:</label>
+                    <input type="number" class="form-control" :plain="true" id="id_chef" v-model="edit.id_chef">
+                </div>
+                <div class="form-group">
+                    <label for="durasi">Id Kategori Resep:</label>
+                    <input type="number" class="form-control" :plain="true" id="id_kategori_resep" v-model="edit.id_kategori_resep">
+                </div>
               </form> 
             </b-modal>
-          </div> -->
+         
+      </div>
 
         <div class="col-12">
           <!-- <card> -->
@@ -179,6 +199,12 @@
   </div>
 </template>
 <script>
+  import Vue from 'vue'
+  import BootstrapVue from 'bootstrap-vue'
+  Vue.use(BootstrapVue);
+  import 'bootstrap/dist/css/bootstrap.css'
+  import 'bootstrap-vue/dist/bootstrap-vue.css'
+  import bModal from 'bootstrap-vue/es/components/modal/modal'
   import axios from 'axios'
   import LTable from 'src/components/UIComponents/Table.vue'
   import Card from 'src/components/UIComponents/Cards/Card.vue'
@@ -193,18 +219,23 @@
         pembeli: [],
         penjual: [],
         resep: [],
+        edit:'',
         transaksi: [],
-        update: false,
-        edit: null,
+        // update: false,
+        // edit: null,
       }
     },
     mounted() {
       this.getPembeli();
       this.getPenjual();
       this.getResep();
+      this.readResep();
       this.getTransaksi();
     },
     methods: {
+      onFileSelected(event) {
+            this.selectedFile = event.target.files[0]
+      },
       getPembeli() {
         axios.get('https://bikinkue.herokuapp.com/api/pembeli')
         .then( res => {
@@ -244,18 +275,82 @@
         .catch(function(error) {
             console.log("Error: ", error);
         })
+        
       },
-    //   showItem(resep) { 
-    //         this.update = true; 
-    //         this.$axios.get('https://bikinkue.herokuapp.com/api/resep' + resep.id_resep) 
-    //         .then(res => {  
-    //             this.edit = res.data.data; 
-    //             console.log(res.data.data); 
-    //         }) 
-    //         .catch(function(error) {
-    //           console.log("Error: ", error);
-    //         }); 
-    // },
+      readResep() {
+        axios.get('https://bikinkue.herokuapp.com/api/resep')
+        .then(res=> {
+          this.resep = res.data.data;
+          console.log("Data response: ", res.data.data);
+        })
+      },
+      showItem(satuResep) { 
+            this.edits = true; 
+            axios.get('https://bikinkue.herokuapp.com/api/resep/' + satuResep.id_resep) 
+            .then(res => {  
+                this.edit = res.data.data; 
+                console.log(res.data.data); 
+            }) 
+            .catch(function(error) {
+              console.log("Error: ", error);
+            }); 
+      },
+      
+    deleteResep(satuResep) {
+      if(confirm("Hapus Resep?")) {
+        axios.delete('https://bikinkue.herokuapp.com/api/resep/' + satuResep.id_resep, {
+                    headers: {
+                        Authorization: localStorage.getItem('api_token')
+                    }
+                })
+        .then(res=> {
+          let conf = alert("Resep berhasil dihapus");
+          this.readResep();
+          console.log("Data response: ", res.data.data);
+        }).catch(function(error) {
+              console.log("Error: ", error);
+        });
+      }
+    },
+    handleOk (evt) {
+            evt.preventDefault()
+            //  if (!this.edit.name) {
+            //     alert('Lengkapi data resep anda')
+            //  }
+            //  else {
+                this.editResep(satuResep)
+            //  }
+        },
+    onFileSelected(event) {
+            this.selectedFile = event.target.files[0]
+        },
+    editResep(satuResep) {
+            const fd = new FormData();
+            fd.append('_method', 'PUT');
+            fd.append('id_resep', this.edit.id_resep);
+            fd.append('nama_resep', this.edit.nama_resep);
+            fd.append('alat', this.edit.alat);
+            fd.append('bahan', this.edit.bahan);
+            fd.append('cara', this.edit.cara);
+            fd.append('porsi', this.edit.porsi);
+            fd.append('durasi', this.edit.durasi);
+            fd.append('image_resep', this.selectedFile, this.selectedFile.name);
+            fd.append('id_chef', this.edit.id_chef);
+            fd.append('id_kategori_resep', this.edit.id_kategori_resep);
+            axios.post('https://bikinkue.herokuapp.com/api/resep/' + satuResep.id_resep, fd, {
+                headers: {
+                    'Authorization': localStorage.getItem('api_token'),
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then(res => {
+                let conf = alert(res.data.data);
+                this.readResep();
+            }).catch(function(error) {
+              console.log("Error: ", error);
+        });
+        }
   }
 }
+
 </script>

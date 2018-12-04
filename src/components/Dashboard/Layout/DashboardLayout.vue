@@ -30,10 +30,10 @@
         <i class="nc-icon nc-paper-2"></i>
         <p>Tambah Resep</p>
       </sidebar-link>
-       <sidebar-link to="/admin/login">
+       <!-- <sidebar-link to="/admin/coba">
         <i class="nc-icon nc-paper-2"></i>
-        <p>Login</p>
-      </sidebar-link>
+        <p>Coba</p>
+      </sidebar-link> -->
     </side-bar>
     <div class="main-panel">
       <top-navbar></top-navbar>

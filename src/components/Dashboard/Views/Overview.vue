@@ -11,14 +11,12 @@
                       :chart-options="lineChart.options"
                       :responsive-options="lineChart.responsiveOptions">
             <template slot="header">
-              <h4 class="card-title">Users Behavior</h4>
-              <p class="card-category">24 Hours performance</p>
+              <h4 class="card-title">Bikin Kue 2018</h4>
             </template>
             <template slot="footer">
               <div class="legend">
-                <i class="fa fa-circle text-info"></i> Open
-                <i class="fa fa-circle text-danger"></i> Click
-                <i class="fa fa-circle text-warning"></i> Click Second Time
+                <i class="fa fa-circle text-info"></i> Transaction
+                <p style="font-size:110%;">Jumlah Transaksi: {{ resultCount }}</p>
               </div>
               <hr>
               <div class="stats">
@@ -32,14 +30,13 @@
         <div class="col-md-4">
           <chart-card :chart-data="pieChart.data" chart-type="Pie">
             <template slot="header">
-              <h4 class="card-title">Email Statistics</h4>
-              <p class="card-category">Last Campaign Performance</p>
+              <h4 class="card-title">Users Statistics</h4>
             </template>
             <template slot="footer">
               <div class="legend">
-                <i class="fa fa-circle text-info"></i> Open
-                <i class="fa fa-circle text-danger"></i> Bounce
-                <i class="fa fa-circle text-warning"></i> Unsubscribe
+                <p style="font-size:110%;">Jumlah Pembeli: {{ resultPem }}</p>
+                <p style="font-size:110%;">Jumlah Penjual: {{ resultPen }}</p>
+                <!-- <i class="fa fa-circle text-warning"></i> Unsubscribe -->
               </div>
               <hr>
               <div class="stats">
@@ -51,7 +48,7 @@
       </div>
     
 
-      <div class="row">
+       <!-- <div class="row">
         <div class="col-md-6">
           <chart-card
             :chart-data="barChart.data"
@@ -59,11 +56,11 @@
             :chart-responsive-options="barChart.responsiveOptions"
             chart-type="Bar">
             <template slot="header">
-              <h4 class="card-title">2018 BikinKue</h4>
+              <h4 class="card-title">2018 BikinKue</h4> 
             </template>
             <template slot="footer">
               <div class="legend">
-                <!-- <i class="fa fa-circle text-info"></i> Tesla Model S -->
+                 <i class="fa fa-circle text-info"></i> Tesla Model S 
                 <i class="fa fa-circle text-danger"></i> BMW 5 Series
               </div>
               <hr>
@@ -72,13 +69,13 @@
               </div>
             </template>
           </chart-card>
-        </div>
+        </div>  -->
 
-        <div class="col-md-6">
+        <!-- <div class="col-md-6">
           <card>
             <template slot="header">
-              <h5 class="title">Tasks</h5>
-              <p class="category">Backend development</p>
+               <h5 class="title">Tasks</h5>
+              <p class="category">Backend development</p> 
             </template>
             <l-table :data="tableData.data"
                      :columns="tableData.columns">
@@ -107,16 +104,18 @@
             </div>
           </card>
 
-        </div>
+        </div> -->
+        
+        <p style="font-size:120%;">Jumlah Pendapatan : Rp {{ totalItem }}</p>
       </div>
     </div>
-  </div>
 </template>
 <script>
   import ChartCard from 'src/components/UIComponents/Cards/ChartCard.vue'
   import StatsCard from 'src/components/UIComponents/Cards/StatsCard.vue'
   import Card from 'src/components/UIComponents/Cards/Card.vue'
   import LTable from 'src/components/UIComponents/Table.vue'
+  import axios from 'axios'
   import Checkbox from 'src/components/UIComponents/Inputs/Checkbox.vue'
 
   export default {
@@ -129,21 +128,24 @@
     },
     data () {
       return {
+        pembeli: [],
+        penjual: [],
+        responseData: [],
+        responsePem: [],
+        responsePen: [],
         editTooltip: 'Edit Task',
         deleteTooltip: 'Remove',
         pieChart: {
           data: {
-            labels: ['40%', '20%', '40%'],
-            series: [40, 20, 40]
+            labels: ['91%', '9%'],
+            series: [91, 9]
           }
         },
         lineChart: {
           data: {
-            labels: ['9:00AM', '12:00AM', '3:00PM', '6:00PM', '9:00PM', '12:00PM', '3:00AM', '6:00AM'],
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov','Dec'],
             series: [
-              [287, 385, 490, 492, 554, 586, 698, 695],
-              [67, 152, 143, 240, 287, 335, 435, 437],
-              [23, 113, 67, 108, 190, 239, 307, 308]
+              [0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 13]
             ]
           },
           options: {
@@ -173,13 +175,13 @@
           ]
         },
         barChart: {
-          data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            series: [
-              [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
-              [412, 243, 280, 580, 453, 353, 300, 364, 368, 410, 636, 695]
-            ]
-          },
+          // data: {
+          //   labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          //   series: [
+          //     [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
+          //     [412, 243, 280, 580, 453, 353, 300, 364, 368, 410, 636, 695]
+          //   ]
+          // },
           options: {
             seriesBarDistance: 10,
             axisX: {
@@ -198,23 +200,71 @@
             }]
           ]
         },
-        tableData: {
-          data: [
-            {title: 'Sign contract for "What are conference organizers afraid of?"', checked: false},
-            {title: 'Lines From Great Russian Literature? Or E-mails From My Boss?', checked: true},
-            {
-              title: 'Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit',
-              checked: true
-            },
-            {title: 'Create 4 Invisible User Experiences you Never Knew About', checked: false},
-            {title: 'Read "Following makes Medium better"', checked: false},
-            {title: 'Unfollow 5 enemies from twitter', checked: false}
-          ]
-        }
       }
+    },
+    methods: {
+        getTransaksi() {
+            axios.get('https://bikinkue.herokuapp.com/api/detailtransaksi')
+            .then(res => {
+            this.transaksi = res.data.data // this bit works fine
+            this.responseData = res.data.data
+            })
+            .catch(function(error) {
+              console.log("Error: ", error);
+            })
+        },
+        getPembeli() {
+            axios.get('https://bikinkue.herokuapp.com/api/pembeli')
+            .then(res => {
+            this.pembeli = res.data.data // this bit works fine
+            this.responsePem = res.data.data
+            })
+            .catch(function(error) {
+              console.log("Error: ", error);
+            })
+        },
+        getPenjual() {
+            axios.get('https://bikinkue.herokuapp.com/api/penjual')
+            .then(res => {
+            this.penjual = res.data.data // this bit works fine
+            this.responsePen = res.data.data
+            })
+            .catch(function(error) {
+              console.log("Error: ", error);
+            })
+        },
+    },
+    mounted() {
+      this.getTransaksi();
+      this.getPembeli();
+      this.getPenjual();
+    },
+    computed: {
+      resultCount () {
+        return this.responseData.length
+      },
+      resultPem () {
+        return this.responsePem.length
+      },
+      resultPen() {
+        return this.responsePen.length
+      },
+      totalItem() {
+        let sum = 0;
+        for(let i=0; i<this.transaksi.length; i++) {
+          sum += (parseFloat(this.transaksi[i].total_harga_transaksi));
+        }
+        return sum;
+      }
+      
     }
+    
+  //   filters: {
+  //       countResults: function(){
+  //         return this.responseData.length;
+  //   }
+  // }
   }
 </script>
-<style>
 
-</style>
+

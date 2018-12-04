@@ -10,19 +10,30 @@ import Icons from 'src/components/Dashboard/Views/Icons.vue'
 import Maps from 'src/components/Dashboard/Views/Maps.vue'
 import Notifications from 'src/components/Dashboard/Views/Notifications.vue'
 import TambahResep from 'src/components/Dashboard/Views/TambahResep.vue'
-import Login from 'src/components/Dashboard/Views/Login.vue'
+import Coba from 'src/components/Dashboard/Views/Coba.vue'
+//import Coba from 'src/components/Coba.vue'
 
 const routes = [
   {
     path: '/',
-    component: DashboardLayout,
+    component: Coba,
     redirect: '/admin/overview'
+  },
+  {
+    path: '/coba',
+    component: Coba,
+    redirect: '/coba'
   },
   {
     path: '/admin',
     component: DashboardLayout,
     redirect: '/admin/overview',
     children: [
+      {
+        path: 'coba',
+        name: 'Coba',
+        component: Coba
+      },
       {
         path: 'overview',
         name: 'Overview',
@@ -59,14 +70,7 @@ const routes = [
         name: 'Tambah Resep',
         component: TambahResep
       },
-      {
-        path: 'login',
-        name: 'Login',
-        component: Login
-      }
-      
     ]
-    
   },
   { path: '*', component: NotFound }
 ]
